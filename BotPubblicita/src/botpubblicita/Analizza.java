@@ -30,10 +30,15 @@ public class Analizza {
                 String path = URLEncoder.encode(getLocation(t), "UTF-8");
                 URL fileUrl = new URL(url + path);
                 System.out.println(url + path);
+                
+                
+                int i;
+                if((i = File.find(message.chat.username)) > -1)//se l'utente era già registrato
+                    String 
+                    
+                    
                 break;
-        }
-        
-        
+        }      
     }
     
     private static String getLocation(String[] v){
