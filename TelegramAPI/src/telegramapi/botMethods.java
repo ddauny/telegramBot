@@ -61,12 +61,7 @@ public class botMethods {
         URL fileUrl = new URL(url);
         Scanner inRemote = new Scanner(fileUrl.openStream());
         inRemote.useDelimiter("\u001a");
-
         String content = inRemote.next();
-        //PrintWriter wr = new PrintWriter("out.xml");
-        //wr.write(content);
-        //wr.close();
-        //inRemote.close();
         return content;
     }
 }

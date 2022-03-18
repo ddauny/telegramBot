@@ -44,6 +44,11 @@ public class TListener extends Thread {
             } catch (IOException ex) {
                 Logger.getLogger(TListener.class.getName()).log(Level.SEVERE, null, ex);
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
