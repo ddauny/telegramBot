@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,34 +32,45 @@ public class File {
         fw.close();
     }
 
-    public static void update(String[] text, int k) throws IOException {
-        fw = new FileWriter(fileName);
-        String s = "";
-        for (int i = 0; i < text.length; i++) {
-            if(i != k)
-                s += text[0] + ";" +  text[1] + ";" + text[2] + "\n";
-        }
-        fw.write(s);
+    public static void append(String text) throws IOException {
+        fw = new FileWriter(fileName, true);
+        fw.append(text);
         fw.close();
     }
 
-    public static String[] read(String nickname) {
-        String v[] = new String[3];
+    public static void update(String text, int k) throws IOException {
+        ArrayList<String> utenti = read();
+        String s[] = new String[3];
+        String out = "";
+        fw = new FileWriter(fileName);
+        //System.out.println(v.length);
+        for (int i = 0; i < utenti.size(); i++) {
+            if (i != k) {
+                s = utenti.get(i).split(";");
+                out += s[0] + ";" + s[1] + ";" + s[2] + "\n";
+            }
+        }
+        out += text;
+        fw.write(out);
+        fw.close();
+    }
+
+    public static ArrayList<String> read() {
+        ArrayList<String> utenti = new ArrayList<String>();
         try {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             String line;
-            int i = 0;
             while ((line = br.readLine()) != null) {
-                v[i] = line;
+                utenti.add(line);
             }
         } catch (IOException ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return v;
+        return utenti;
     }
 
-    public static int find(String nickname) {
+    public static int find(int id) {
         try {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
@@ -66,7 +78,9 @@ public class File {
             int i = 0;
             while ((line = br.readLine()) != null) {
                 //line = br.readLine();
-                if (line.split(";")[0].equals(nickname)) {//se trovo già l'utente
+                //System.out.println("reading");
+                if (Integer.parseInt(line.split(";")[0]) == id) {//se trovo già l'utente
+                    //System.out.println(i);
                     return i;
                 }
                 i++;
@@ -74,6 +88,7 @@ public class File {
         } catch (IOException ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //System.out.println("-1");
         return -1;
     }
 }

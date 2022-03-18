@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
+import telegramapi.*;
 /**
  *
  * @author dani2
@@ -25,36 +25,31 @@ public class XMLParser {
 
     public XMLParser() {
     }
-    
-    public List parseDocumentFilm(String filename) throws ParserConfigurationException, SAXException, IOException {
+
+    public static ArrayList<Location> parseDocument(String filename) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
         Element root, element;
         NodeList nodelist;
-        
+
         Document document;
-        
+
         factory = DocumentBuilderFactory.newDefaultInstance();
         builder = factory.newDocumentBuilder();
 
         document = builder.parse(filename);
         root = document.getDocumentElement();
 
-        nodelist = root.getElementsByTagName("root");
-        nodelist = ((Element) nodelist.item(1)).getElementsByTagName("Film");
-        List lista = new ArrayList<Film>();
+        nodelist = root.getElementsByTagName("place");
+        ArrayList<Location> lista = new ArrayList<Location>();
 
         for (int i = 0; i < nodelist.getLength(); i++) {
-//            System.out.println(parseObject(nodelist.item(i)));
-
-            lista.add(parseObject(nodelist.item(i)));
+            lista.add(parseLocation(nodelist.item(i)));
         }
-
         return lista;
     }
-    
-        public Film parseObject(Node o){
-        Film m=new Film(o);
-        return m;
+
+    public static Location parseLocation(Node o) {
+        return new Location(Double.parseDouble(((Element)o).getAttribute("lat")), Double.parseDouble(((Element)o).getAttribute("lon")));
     }
 }

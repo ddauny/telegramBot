@@ -48,7 +48,7 @@ public class botMethods {
         return messageList;
     }
 
-    public void sendMessage(int idDestinatario, String testo) throws MalformedURLException, IOException {
+    public static void sendMessage(int idDestinatario, String testo) throws MalformedURLException, IOException {
         String url = "https://api.telegram.org/bot5024404474:AAFdg91NpLQAHZvMeM1SRpJFsyKzhFmh1Y8/sendMessage?";
         String path = "chat_id=" + idDestinatario + "&text=" + URLEncoder.encode(testo, "UTF-8");
         URL fileUrl = new URL(url + path);
