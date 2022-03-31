@@ -21,10 +21,10 @@ import org.json.*;
 public class botMethods {
 
     public ArrayList<Message> getUpdates(String jsonS) throws IOException {
-        Chat chat;
-        Message mex;
-        From from;        
-        ArrayList<Message> messageList = new ArrayList<Message>();
+//        Chat chat;
+//        Message mex;
+//        From from;        
+//        ArrayList<Message> messageList = new ArrayList<Message>();
         URL fileUrl = new URL(jsonS);
         Scanner inRemote = new Scanner(fileUrl.openStream());
         inRemote.useDelimiter("\u001a");
@@ -32,20 +32,16 @@ public class botMethods {
         String jsonString = content;
         JSONObject obj = new JSONObject(jsonString);
         JSONArray v = obj.getJSONArray("result");
-        JSONObject mess, m, f, c;
+        
+        JSONObject o;//, m, f, c;
         for (int i = 0; i < v.length(); i++) {
-            mess = v.getJSONObject(i);
-            m = mess.getJSONObject("message");
-            f = m.getJSONObject("from");
-            c = m.getJSONObject("chat");
-
-            from = new From(f.getInt("id"), f.getBoolean("is_bot"), f.getString("first_name"), f.getString("username"), f.getString("language_code"));
-            chat = new Chat(c.getInt("id"), c.getString("first_name"), c.getString("username"), c.getString("type"));
-            mex = new Message(from, chat, mess.getInt("update_id"), m.getInt("message_id"), m.getInt("date"), m.getString("text"));
-
-            messageList.add(mex);
+            o = v.getJSONObject(i);
+            
+            //o.getString("nome");
+            //o.getJSONArray("nome");
+//            o.getJSONObject("message");
         }
-        return messageList;
+          return new ArrayList<Message>();
     }
 
     public static void sendMessage(int idDestinatario, String testo) throws MalformedURLException, IOException {
